@@ -73,3 +73,12 @@ User 6 did not request any confirmation messages. The confirmation rate is 0.
 User 3 made 2 requests and both timed out. The confirmation rate is 0.
 User 7 made 3 requests and all were confirmed. The confirmation rate is 1.
 User 2 made 2 requests where one was confirmed and the other timed out. The confirmation rate is 1 / 2 = 0.5.
+
+
+ans==
+select s.user_id ,
+round(avg(if(c.action ='confirmed',1,0)),2) as confirmation_rate
+from Signups s 
+left join Confirmations c
+on S.user_id=c.user_id
+group by s.user_id;
