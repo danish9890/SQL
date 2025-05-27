@@ -49,3 +49,15 @@ The customer id 2 has a first order with delivery id 2 and it is immediate.
 The customer id 3 has a first order with delivery id 5 and it is scheduled.
 The customer id 4 has a first order with delivery id 7 and it is immediate.
 Hence, half the customers have immediate first orders.
+
+
+
+ ans===
+select 
+round(sum(if(min_order_date=min_customer_pref_delivery_date,1,0)*100)/count(min_order_date),2)as immediate_percentage from 
+(select delivery_id,
+customer_id,
+min(order_date) as min_order_date,
+min(customer_pref_delivery_date) as min_customer_pref_delivery_date
+from Delivery
+group by customer_id) as new_table;
